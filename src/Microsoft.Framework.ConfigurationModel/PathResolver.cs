@@ -4,6 +4,10 @@
 #if K10 || NET45
 using System;
 using System.IO;
+#if K10
+using Microsoft.Framework.Runtime;
+using Microsoft.Framework.Runtime.Infrastructure;
+#endif
 
 namespace Microsoft.Framework.ConfigurationModel
 {
@@ -14,16 +18,14 @@ namespace Microsoft.Framework.ConfigurationModel
         {
             get
             {
-				return Environment.CurrentDirectory;
-//                if (Type.GetType("Mono.Runtime") == null) {
-//#if NET45
-//                    return AppDomain.CurrentDomain.BaseDirectory;
-//#else
-//                    return ApplicationContext.BaseDirectory;
-//#endif
-//                } else {
-//                    return ".";
-//                }
+#if NET45
+                return AppDomain.CurrentDomain.BaseDirectory;
+#else
+                var serviceProvider = CallContextServiceLocator.Locator.ServiceProvider;
+                IApplicationEnvironment appEnvironment = serviceProvider.GetService<IApplicationEnvironment>();
+		        return appEnvironment.ApplicationBasePath;
+                //return ApplicationContext.BaseDirectory;
+#endif
             }
         }
 
