@@ -14,15 +14,16 @@ namespace Microsoft.Framework.ConfigurationModel
         {
             get
             {
-                if (Type.GetType("Mono.Runtime") == null) {
-#if NET45
-                    return AppDomain.CurrentDomain.BaseDirectory;
-#else
-                    return ApplicationContext.BaseDirectory;
-#endif
-                } else {
-                    return ".";
-                }
+				return Environment.CurrentDirectory;
+//                if (Type.GetType("Mono.Runtime") == null) {
+//#if NET45
+//                    return AppDomain.CurrentDomain.BaseDirectory;
+//#else
+//                    return ApplicationContext.BaseDirectory;
+//#endif
+//                } else {
+//                    return ".";
+//                }
             }
         }
 
