@@ -20,7 +20,8 @@ namespace Microsoft.Framework.ConfigurationModel
 //                return AppDomain.CurrentDomain.BaseDirectory;
 //#else
                 var serviceProvider = CallContextServiceLocator.Locator.ServiceProvider;
-                IApplicationEnvironment appEnvironment = serviceProvider.GetService<IApplicationEnvironment>();
+				
+                IApplicationEnvironment appEnvironment = (IApplicationEnvironment) serviceProvider.GetService(typeof (IApplicationEnvironment));
 		        return appEnvironment.ApplicationBasePath;
                 //return ApplicationContext.BaseDirectory;
 //#endif
